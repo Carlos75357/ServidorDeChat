@@ -20,16 +20,19 @@ public class ClientWorker implements Runnable {
     @Override
     public void run() {
         try {
+            // Se crea un bufferedReader para leer los mensajes del cliente, se lee el nombre de usuario y se agrega el cliente a la lista de conectados.
             inFromClient = new BufferedReader(new InputStreamReader(connectionSocket.getInputStream()));
             username = inFromClient.readLine();
             ServerChat.addClient(outToClient, username);
             String clientMessage;
             while ((clientMessage = inFromClient.readLine()) != null) {
+                // Lee los mensajes del cliente y si este en algún momento escribe bye, el cliente se desconecta de la lista de conectados.
                 if (clientMessage.equalsIgnoreCase("bye")) {
                     System.out.println("Desconectando...");
                     ServerChat.removeClient(username);
                     break;
                 }
+                // Esta linea es la que envia el mensaje a todos los clientes.
                 ServerChat.enviarMensajeClientes(username + ": " + clientMessage);
             }
 

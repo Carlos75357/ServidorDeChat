@@ -12,6 +12,7 @@ public class ReceiveMessage implements Runnable{
 
     @Override
     public void run() {
+        // Lee los mensajes del servidor mientras este esté disponible e impreme los mensjes del servidor
         try {
             String serverMessage;
             while ((serverMessage = reader.readLine()) != null) {
